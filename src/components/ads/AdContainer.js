@@ -1,7 +1,6 @@
 import React from 'react'
 import AdList from './AdList'
 import Search from './Search'
-import NavBar from './NavBar'
 import { Container } from 'semantic-ui-react'
 
 export default class AdContainer extends React.Component {
@@ -38,7 +37,6 @@ export default class AdContainer extends React.Component {
     console.log(this.state.ads)
     return (
       <div>
-        <NavBar />
         <Container>
           <Search handleSearch={this.handleSearch} />
           <AdList currentAds={this.state.currentAds}/>

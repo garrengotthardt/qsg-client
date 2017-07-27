@@ -7,20 +7,33 @@ const AdCard = (props) => {
 
 
   return (
-    <Card>
-    <Image src={props.ad.image_url} />
+    <Card >
+    <Image src={props.ad.image_url} classname='card-image' />
      <Card.Content>
        <Card.Header>
          {props.ad.title}
        </Card.Header>
        <Card.Meta>
          <span className='date'>
-           {props.ad.creator_id}
+           <a>
+             <Icon name='user circle' /> {props.ad.creator.first_name}
+           </a>
          </span>
        </Card.Meta>
        <Card.Description>
         {props.ad.description}
        </Card.Description>
+     </Card.Content>
+     <Card.Content extra>
+       <a>
+         <Icon name='info circle' />
+       </a>
+       <a>
+         <Icon name='comments' />
+       </a>
+       <a>
+         <Icon name='empty heart' />
+       </a>
      </Card.Content>
     </Card>
   )
@@ -28,11 +41,3 @@ const AdCard = (props) => {
 }
 
 export default AdCard
-
-
-//  <Card.Content extra>
-//    <a>
-//      <Icon name='user' />
-//      22 Friends
-//    </a>
-//  </Card.Content>
