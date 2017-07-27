@@ -15,7 +15,7 @@ const AdCard = (props) => {
        </Card.Header>
        <Card.Meta>
          <span className='date'>
-           {props.ad.creator}
+           {props.ad.creator_id}
          </span>
        </Card.Meta>
        <Card.Description>

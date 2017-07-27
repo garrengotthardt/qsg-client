@@ -1,6 +1,8 @@
 import React from 'react'
-import Filter from './Filter'
 import AdList from './AdList'
+import Search from './Search'
+import NavBar from './NavBar'
+import { Container } from 'semantic-ui-react'
 
 export default class AdContainer extends React.Component {
   constructor(props){
@@ -21,12 +23,27 @@ export default class AdContainer extends React.Component {
     }))
   }
 
+  handleSearch = (searchTerm) => {
+    let searchResults = this.state.ads.filter( ad => {
+      return ad.title.toLowerCase().includes(searchTerm.toLowerCase()) || ad.description.toLowerCase().includes(searchTerm.toLowerCase())
+    })
+    this.setState({
+      currentAds: searchResults
+    })
+  }
+
+
+
   render () {
     console.log(this.state.ads)
     return (
       <div>
-        
-        <AdList currentAds={this.state.currentAds}/>
+        <NavBar />
+        <Container>
+          <Search handleSearch={this.handleSearch} />
+          <AdList currentAds={this.state.currentAds}/>
+        </Container>
+
       </div>
 
     )
