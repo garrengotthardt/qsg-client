@@ -4,6 +4,7 @@ import './App.css';
 
 import NavBar from './components/NavBar'
 import AdContainer from './components/ads/AdContainer'
+import UserContainer from './components/users/UserContainer'
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
       <div>
         <NavBar />
         <AdContainer />
+        <UserContainer />
       </div>
     );
   }
