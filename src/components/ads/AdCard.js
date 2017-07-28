@@ -16,7 +16,7 @@ const AdCard = (props) => {
        </Card.Header>
        <Card.Meta>
          <span className='date'>
-           <Link to={`/users/${props.ad.creator.id}`} user={props.ad.creator}>
+           <Link to={`/users/${props.ad.creator.id}`}>
              <Icon name='user circle' /> {props.ad.creator.first_name}
            </Link>
          </span>
