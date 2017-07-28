@@ -10,6 +10,8 @@ import UsersContainer from './components/users/UsersContainer'
 import UserDetails from './components/users/UserDetails'
 import Auth from './auth'
 import AuthAdapter from './authAdapter'
+import AdDetailsContainer from './components/ads/AdDetailsContainer'
+
 
 
 class App extends Component {
@@ -72,6 +74,7 @@ class App extends Component {
           <Route exact path="/" component={Auth(AdContainer)} />
           <Route exact path="/users" component={Auth(UsersContainer)} currentUser={this.state.currentUser}/>
           <Route path="/users/:id" component={Auth(UserDetails)} />
+          <Route path="/ads/:id" component={AdDetailsContainer} />
         </div>
       </Router>
     );
