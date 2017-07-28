@@ -9,7 +9,7 @@ const AdCard = (props) => {
 
   return (
     <Card >
-    <Image src={props.ad.image_url} classname='card-image' />
+    <Image src={props.ad.image_url} className='card-image' />
      <Card.Content>
        <Card.Header>
          {props.ad.title}
