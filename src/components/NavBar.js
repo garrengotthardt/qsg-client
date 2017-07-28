@@ -18,6 +18,7 @@ export default class NavBar extends Component {
     return (
       <div>
         <Menu pointing secondary>
+          Hello {this.props.user.first_name}
           <Link to='/' ><Menu.Item name='all listings' active={activeItem === 'all listings'} onClick={this.handleItemClick} /></Link>
           <Link to='/users' ><Menu.Item name='all users' active={activeItem === 'all users'} onClick={this.handleItemClick} /></Link>
           <Menu.Item name='saved listings' active={activeItem === 'friends'} onClick={this.handleItemClick} />

@@ -19,7 +19,7 @@ class App extends Component {
 
     this.state = {
       auth: {
-        email: '',
+        currentUser: {},
         isLoggedIn: false
       }
     }
@@ -40,11 +40,12 @@ class App extends Component {
         if( res.error ){
           console.log("do nothing")
         } else {
-          localStorage.setItem('email', res.email)
+          console.log(res);
+          localStorage.setItem('email', res.user.email)
           this.setState({
             auth:{
               isLoggedIn: true,
-              email: res.email
+              currentUser: res.user
             }
           })
         }
@@ -56,7 +57,7 @@ class App extends Component {
   handleLogout(){
       localStorage.clear()
       this.setState({auth: {
-        email: '',
+        currentUser: {},
         isLoggedIn:false
       }})
     }
@@ -65,7 +66,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route path='/' render={()=> <NavBar onLogout={this.handleLogout.bind(this)} /> } />
+          <Route path='/' render={()=> <NavBar user={this.state.auth.currentUser} onLogout={this.handleLogout.bind(this)} /> } />
           <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
           <Route path="/signup" component={SignUpForm} />
           <Route exact path="/" component={Auth(AdContainer)} />
