@@ -5,7 +5,7 @@ import AdCard from './AdCard'
 
 const AdList = (props) => {
 
-console.log(props)
+// console.log(props)
 
   return (
     <Card.Group>

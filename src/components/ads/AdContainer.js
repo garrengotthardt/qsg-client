@@ -34,7 +34,7 @@ export default class AdContainer extends React.Component {
 
 
   render () {
-    console.log(this.state.ads)
+    // console.log(this.state.ads)
     return (
       <div>
         <Container>

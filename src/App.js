@@ -7,7 +7,7 @@ import LoginForm from './components/users/LoginForm'
 import NavBar from './components/NavBar'
 import AdContainer from './components/ads/AdContainer'
 import UsersContainer from './components/users/UsersContainer'
-import UserDetails from './components/users/UserDetails'
+import UserProfileContainer from './components/users/userProfile/UserProfileContainer'
 import Auth from './auth'
 import AuthAdapter from './authAdapter'
 
@@ -19,7 +19,12 @@ class App extends Component {
 
     this.state = {
       auth: {
-        currentUser: {},
+        currentUser: {
+          id: 1,
+          first_name: "Alexa",
+          last_name: "Born",
+          email: "alex@yahooo.com"
+        },
         isLoggedIn: false
       }
     }
@@ -30,7 +35,7 @@ class App extends Component {
   //     auth: {
   //       email: email
   //   })
-  //   console.log("Email: ", this.state.email);
+  //   // console.log("Email: ", this.state.email);
   // }
 
   onLogin(loginParams){
@@ -38,9 +43,9 @@ class App extends Component {
       .then( res => {
         //check for an error message
         if( res.error ){
-          console.log("do nothing")
+          // console.log("do nothing")
         } else {
-          console.log(res);
+          // debugger
           localStorage.setItem('email', res.user.email)
           this.setState({
             auth:{
@@ -70,8 +75,8 @@ class App extends Component {
           <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
           <Route path="/signup" component={SignUpForm} />
           <Route exact path="/" component={Auth(AdContainer)} />
-          <Route exact path="/users" component={Auth(UsersContainer)} currentUser={this.state.currentUser}/>
-          <Route path="/users/:id" component={Auth(UserDetails)} />
+          {/* <Route exact path="/users" component={Auth(UsersContainer)} /> */}
+          <Route path="/users/1" render={() => <UserProfileContainer currentUser={this.state.auth.currentUser} />} />
         </div>
       </Router>
     );
