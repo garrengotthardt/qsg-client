@@ -6,7 +6,8 @@ import SignUpForm from './components/users/SignUpForm'
 import LoginForm from './components/users/LoginForm'
 import NavBar from './components/NavBar'
 import AdContainer from './components/ads/AdContainer'
-import UserContainer from './components/users/UserContainer'
+import UsersContainer from './components/users/UsersContainer'
+import UserDetails from './components/users/UserDetails'
 
 
 class App extends Component {
@@ -18,8 +19,8 @@ class App extends Component {
           <Route exact path="/" component={AdContainer} />
           <Route path="/login" component={LoginForm} />
           <Route path="/signup" component={SignUpForm} />
-          {/* <Route path="/users" component={UsersContainer} /> */}
-          {/* <Route path="/users/:id" component={UserContainer} /> */}
+          <Route exact path="/users" component={UsersContainer} />
+          <Route path="/users/:id" component={UserDetails} />
         </div>
       </Router>
     );

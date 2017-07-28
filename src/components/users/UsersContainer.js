@@ -1,7 +1,7 @@
 import React from 'react'
-import UserInfo from './UserInfo'
+import UserList from './UserList'
 
-export default class UserContainer extends React.Component {
+export default class UsersContainer extends React.Component {
   constructor(props){
     super(props)
 
@@ -17,14 +17,13 @@ export default class UserContainer extends React.Component {
     .then(users => this.setState({users}))
   }
 
-render(){
-  return (
-      <div>
-        User Container
-        <UserInfo currentUser={this.state.currentUser}/>
-      </div>
+  render(){
+    return (
+        <div>
+          <UserList users={this.state.users}/>
+        </div>
 
-  )
-}
+    )
+  }
 
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 const AdCard = (props) => {
 
@@ -15,9 +16,9 @@ const AdCard = (props) => {
        </Card.Header>
        <Card.Meta>
          <span className='date'>
-           <a>
+           <Link to={`/users/${props.ad.creator.id}`} user={props.ad.creator}>
              <Icon name='user circle' /> {props.ad.creator.first_name}
-           </a>
+           </Link>
          </span>
        </Card.Meta>
        <Card.Description>
