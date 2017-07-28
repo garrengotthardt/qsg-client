@@ -6,6 +6,7 @@ import SignUpForm from './components/users/SignUpForm'
 import LoginForm from './components/users/LoginForm'
 import NavBar from './components/NavBar'
 import AdContainer from './components/ads/AdContainer'
+import AdForm from './components/ads/AdForm'
 import UsersContainer from './components/users/UsersContainer'
 import UserDetails from './components/users/UserDetails'
 import Auth from './auth'
@@ -63,6 +64,7 @@ class App extends Component {
     }
 
   render() {
+    console.log(this.state.auth.currentUser)
     return (
       <Router>
         <div>
@@ -70,6 +72,7 @@ class App extends Component {
           <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
           <Route path="/signup" component={SignUpForm} />
           <Route exact path="/" component={Auth(AdContainer)} />
+          <Route exact path="/ads/new" render={()=> <AdForm currentUser={this.state.auth.currentUser}/> } />
           <Route exact path="/users" component={Auth(UsersContainer)} currentUser={this.state.currentUser}/>
           <Route path="/users/:id" component={Auth(UserDetails)} />
         </div>

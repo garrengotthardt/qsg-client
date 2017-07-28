@@ -34,14 +34,12 @@ export default class AdContainer extends React.Component {
 
 
   render () {
-    console.log(this.state.ads)
     return (
       <div>
         <Container>
           <Search handleSearch={this.handleSearch} />
           <AdList currentAds={this.state.currentAds}/>
         </Container>
-
       </div>
 
     )
