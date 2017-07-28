@@ -41,7 +41,6 @@ export default class AdContainer extends React.Component {
           <Search handleSearch={this.handleSearch} />
           <AdList currentAds={this.state.currentAds}/>
         </Container>
-
       </div>
 
     )
