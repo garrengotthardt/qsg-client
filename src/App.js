@@ -70,7 +70,7 @@ class App extends Component {
           <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
           <Route path="/signup" component={SignUpForm} />
           <Route exact path="/" component={Auth(AdContainer)} />
-          <Route exact path="/users" component={Auth(UsersContainer)} />
+          <Route exact path="/users" component={Auth(UsersContainer)} currentUser={this.state.currentUser}/>
           <Route path="/users/:id" component={Auth(UserDetails)} />
         </div>
       </Router>
