@@ -10,7 +10,7 @@ export default class AdContainer extends React.Component {
   }
 
   render () {
-    console.log(this.props)
+    console.log("ad container props",this.props)
     return (
       <div>
         <Container>

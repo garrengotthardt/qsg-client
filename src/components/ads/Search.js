@@ -3,8 +3,8 @@ import { Input, Button, Form } from 'semantic-ui-react'
 
 class Search extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       searchTerm: ''

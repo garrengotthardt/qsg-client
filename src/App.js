@@ -122,7 +122,7 @@ class App extends Component {
 
           <Route path="/signup" component={SignUpForm} />
 
-          <Route exact path="/ads" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds}/> } />
+          <Route exact path="/ads" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch}/> } />
 
           <Route exact path="/ads/new" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdForm currentUser={this.state.auth.currentUser}/> } />
 
