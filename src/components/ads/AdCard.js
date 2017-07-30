@@ -27,7 +27,7 @@ const AdCard = (props) => {
      </Card.Content>
      <Card.Content extra>
        <a>
-         <Icon name='info circle' />
+         <Link to="/ads/{props.ad.id}" onClick={() => props.handleInfoSelect(props.ad.id)} ><Icon name='info circle' /></Link>
        </a>
        <a>
          <Icon name='comments' />

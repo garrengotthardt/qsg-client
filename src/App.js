@@ -28,6 +28,7 @@ class App extends Component {
       },
       ads: [],
       currentAds: [],
+      selectedAd: {}
     }
   }
 
@@ -59,9 +60,6 @@ class App extends Component {
 
     console.log(this.state)
   }
-
-
-
 
   // handleLogin = (email) => {
   //   this.setState({
@@ -111,6 +109,12 @@ class App extends Component {
     })
   }
 
+  handleInfoSelect = (id) => {
+    this.setState({
+      selectedAd: this.state.currentAds.includes(id)
+    })
+  }
+
   render() {
     console.log("rendering App.js")
     return (
@@ -126,7 +130,7 @@ class App extends Component {
 
           <Route exact path="/ads/new" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdForm currentUser={this.state.auth.currentUser}/> } />
 
-          <Route exact path="/ads/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdDetailsContainer /> } />
+          <Route exact path="/ads/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} handleInfoSelect={this.handleInfoSelect}/> } />
 
           <Route exact path="/users" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer currentUser={this.state.auth.currentUser}/> }/>
 
@@ -138,4 +142,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
