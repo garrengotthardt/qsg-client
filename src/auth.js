@@ -17,6 +17,7 @@ export default function (Component, inheritedProps) {
       }
     }
     render(){
+      console.log('inheritedProps:', inheritedProps)
       return <Component  {...this.props} />
     }
   }

@@ -7,7 +7,7 @@ export default class NavBar extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { activeItem: 'all listings' }
+    this.state = { activeItem: 'home' }
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -19,7 +19,8 @@ export default class NavBar extends Component {
       <div>
         <Menu pointing secondary>
           Hello {this.props.user.first_name}
-          <Link to='/' ><Menu.Item name='all listings' active={activeItem === 'all listings'} onClick={this.handleItemClick} /></Link>
+          <Link to='/' ><Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} /></Link>
+          <Link to='/ads' ><Menu.Item name='all listings' active={activeItem === 'all listings'} onClick={this.handleItemClick} /></Link>
           <Link to='/ads/new' ><Menu.Item name='create ad' active={activeItem === 'create ad'} onClick={this.handleItemClick} /></Link>
           <Link to='/users' ><Menu.Item name='all users' active={activeItem === 'all users'} onClick={this.handleItemClick} /></Link>
 
