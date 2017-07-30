@@ -15,7 +15,6 @@ import AuthAdapter from './authAdapter'
 // import AppContainer from './components/AppContainer'
 
 
-
 class App extends Component {
 
   constructor() {
@@ -33,7 +32,7 @@ class App extends Component {
 
   componentWillMount(){
     if (localStorage.getItem('email')) {
-      console.log("hello")
+      // console.log("hello")
        let email = localStorage.getItem('email')
        fetch('http://localhost:3000/api/v1/users')
        .then(data => data.json())
@@ -55,7 +54,6 @@ class App extends Component {
       ads,
       currentAds: ads
     }))
-
 
     console.log(this.state)
   }
@@ -112,7 +110,7 @@ class App extends Component {
   }
 
   render() {
-    console.log("rendering App.js")
+    // console.log("rendering App.js")
     return (
       <Router>
         <div>
@@ -130,7 +128,7 @@ class App extends Component {
 
           <Route exact path="/users" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer currentUser={this.state.auth.currentUser}/> }/>
 
-          <Route path="/users/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} currentUser={this.state.auth.currentUser}/>}/>
+          <Route path="/users/profile" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads}/>}/>
 
         </div>
       </Router>
