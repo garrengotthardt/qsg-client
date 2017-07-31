@@ -3,7 +3,7 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 const AdCard = (props) => {
-
+  console.log(props)
   return (
     <Card centered='true'>
     <Image src={props.ad.image_url} className='card-image' />
@@ -13,8 +13,8 @@ const AdCard = (props) => {
        </Card.Header>
        <Card.Meta onClick={() => props.handleUserSelect(props.ad.creator)}>
          <span className='date'>
-           <Link to={`/users/${props.ad.creator.id}`}>
-             <Icon name='user circle' /> {props.ad.creator.first_name} {props.ad.creator.last_name}
+           <Link to={`/users/${props.ad.creator_id}`}>
+
            </Link>
          </span>
        </Card.Meta>
@@ -39,4 +39,4 @@ const AdCard = (props) => {
 }
 
 export default AdCard
-//
+// <Icon name='user circle' /> {props.ad.creator.first_name} {props.ad.creator.last_name}

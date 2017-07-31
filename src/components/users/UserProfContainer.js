@@ -1,29 +1,44 @@
 import React from 'react'
 import { Container, Header, Divider, Button } from 'semantic-ui-react'
 import UserCard from './UserCard'
-import UserCreatedAdsList from './userProfile/UserCreatedAdsList'
+import AdList from './../ads/AdList'
 import { Link } from 'react-router-dom'
 
 
-const UserProfContainer = (props) => {
-  const createdAds = props.ads.filter( ad => {
-    return ad.creator.email === props.user.email
-  })
-  // debugger
+export default class UserProfContainer extends React.Component {
+  constructor(props) {
+    super(props)
 
-  return(
-    <Container textAlign='center'>
-      <h1>{props.user.first_name} {props.user.last_name}</h1>
-      <div className='segment'>
-        <UserCard user={props.user} handleUserSelect={props.handleUserSelect}/>
-      </div>
-      <Divider />
-      <div className='segment'>
-        <h2>These are {props.user.first_name}'s listings:</h2>
-        <UserCreatedAdsList createdAds={createdAds} handleInfoSelect={props.handleInfoSelect} handleUserSelect={props.handleUserSelect}/>
-      </div>
-    </Container>
-  )
+    this.state = {
+      user: {}
+    }
+  }
+
+  componentDidMount() {
+    fetch(`http://localhost:3000/api/v1/users/${window.location.pathname.slice(7)}`)
+    .then(data => data.json())
+    .then(user => this.setState({user}))
+  }
+
+
+  render () {
+    return(
+      <Container textAlign='center'>
+      <div>
+        <h1>{this.state.user.first_name} {this.state.user.last_name}</h1>
+        <div className='segment'>
+          <UserCard user={this.state.user} handleUserSelect={this.props.handleUserSelect}/>
+        </div>
+        <Divider />
+        <div className='segment'>
+          <h2>These are {this.state.user.first_name}'s Listings:</h2>
+          {this.state.user.ads ? <AdList ads={this.state.user.ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect}/> : null}
+        </div>
+        <div className='segment'>
+          <h2>These are {this.state.user.first_name}'s Saved Listings:</h2>
+          {this.state.user.saved_ads ? <AdList ads={this.state.user.saved_ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect}/> : null}
+        </div></div>
+      </Container>
+    )
+  }
 }
-
-export default UserProfContainer

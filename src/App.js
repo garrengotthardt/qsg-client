@@ -139,7 +139,7 @@ class App extends Component {
 
           <Route path="/signup" component={SignUpForm} />
 
-          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} /> } />
+          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer ads={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} /> } />
 
 
           <Switch>
@@ -152,7 +152,7 @@ class App extends Component {
 
           <Route path="/users/profile" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
 
-          <Route exact path="/users/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfContainer ads={this.state.ads} user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} handleInfoSelect={this.handleInfoSelect}/>} />
+          <Route exact path="/users/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfContainer user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} handleInfoSelect={this.handleInfoSelect}/>} />
 
           </Switch>
 
