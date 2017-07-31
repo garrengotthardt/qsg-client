@@ -27,7 +27,7 @@ const AdCard = (props) => {
      </Card.Content>
      <Card.Content extra>
        <a>
-         <Link to="/ads/{props.ad.id}" onClick={() => props.handleInfoSelect(props.ad.id)} ><Icon name='info circle' /></Link>
+         <Link to={`/ads/${props.ad.id}`} ><Icon onClick={() => props.handleInfoSelect(props.ad)} name='info circle' /></Link>
        </a>
        <a>
          <Icon name='comments' />
@@ -42,3 +42,4 @@ const AdCard = (props) => {
 }
 
 export default AdCard
+//

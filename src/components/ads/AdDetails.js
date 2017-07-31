@@ -9,7 +9,7 @@ const AdDetails = (props) => {
       <h3>Price: {props.ad.price}</h3>
       <h3>Location: {props.ad.location}</h3>
       <h3>Description: {props.ad.description}</h3>
-      <h3>Seller: {props.ad.creator.name}</h3>
+
 
     </div>
   )
@@ -17,3 +17,4 @@ const AdDetails = (props) => {
 }
 
 export default AdDetails
+// <h3>Seller: {props.ad.creator.first_name}</h3>
