@@ -42,3 +42,11 @@
 /*.card-image {
   height: 290px;
 }*/
+
+.ui.secondary.pointing.menu {
+  margin-bottom: 25px
+}
+
+.ad-image {
+  width: 400px
+}
