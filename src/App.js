@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Link, Switch} from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
 import SignUpForm from './components/users/SignUpForm'
@@ -15,7 +15,6 @@ import AuthAdapter from './authAdapter'
 // import AppContainer from './components/AppContainer'
 
 
-
 class App extends Component {
 
   constructor() {
@@ -28,12 +27,13 @@ class App extends Component {
       },
       ads: [],
       currentAds: [],
+      selectedAd: {}
     }
   }
 
   componentDidMount(){
     if (localStorage.getItem('email')) {
-      console.log("hello")
+      // console.log("hello")
        let email = localStorage.getItem('email')
        fetch('http://localhost:3000/api/v1/users')
        .then(data => data.json())
@@ -53,11 +53,7 @@ class App extends Component {
       ads,
       currentAds: ads
     }))
-
   }
-
-
-
 
   // handleLogin = (email) => {
   //   this.setState({
@@ -107,8 +103,19 @@ class App extends Component {
     })
   }
 
+  handleInfoSelect = (ad) => {
+    // return function (event) {
+      // event.preventDefault()
+
+      this.setState({
+        selectedAd: ad
+      })
+
+    // }
+  }
+
   render() {
-    console.log("rendering App.js")
+
     return (
       <Router>
         <div>
@@ -118,9 +125,8 @@ class App extends Component {
 
           <Route path="/signup" component={SignUpForm} />
 
+          <Route exact path="/ads" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect}/> } />
 
-
-          <Route exact path="/ads" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch}/> } />
 
           <Switch>
 
@@ -131,10 +137,14 @@ class App extends Component {
           </Switch>
 
 
+          <Route path="/users/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} currentUser={this.state.auth.currentUser}/>}/>
+         
+          <Route exact path="/ads/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
+
           <Route exact path="/users" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer currentUser={this.state.auth.currentUser}/> }/>
 
+          <Route path="/users/profile" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads}/>}/>
 
-          <Route path="/users/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} currentUser={this.state.auth.currentUser}/>}/>
 
         </div>
       </Router>
@@ -142,4 +152,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
