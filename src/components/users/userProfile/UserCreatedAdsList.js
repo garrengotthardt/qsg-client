@@ -5,8 +5,8 @@ import AdCard from '../../ads/AdCard'
 const UserCreatedAdsList = (props) => {
   return (
     <Card.Group>
-      {this.props.createdAds.map( ad => (
-        <AdCard />
+      {props.createdAds.map( ad => (
+        <AdCard ad={ad}/>
       ))}
     </Card.Group>
   )

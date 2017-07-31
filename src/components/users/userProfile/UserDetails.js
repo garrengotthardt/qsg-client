@@ -3,7 +3,7 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 
 const UserDetails = (props) => {
   return(
-    <Card>
+    <Card centered='true'>
       <Image src='http://s3.amazonaws.com/cdn.roosterteeth.com/default/original/user_profile_female.jpg' />
       <Card.Content>
         <Card.Header>
