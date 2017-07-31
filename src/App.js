@@ -106,8 +106,9 @@ class App extends Component {
     })
   }
 
-  handleSaveAd = (adId) => {
+  handleSaveAd = (event, adId) => {
     console.log("saving")
+    console.log(event)
     fetch('http://localhost:3000/api/v1/saver_ads', {
       method: 'POST',
       body: JSON.stringify({ "saver_id": `${this.state.auth.currentUser.id}`, "saved_ad_id": `${adId}` }),
