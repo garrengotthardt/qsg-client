@@ -8,8 +8,8 @@ const AdList = (props) => {
 // console.log(props)
 
   return (
-    <Card.Group>
-      {props.currentAds.map( ad => <AdCard ad={ad} handleInfoSelect={props.handleInfoSelect}/>)}
+    <Card.Group centered='true'>
+      {props.currentAds.map( ad => <AdCard ad={ad} handleInfoSelect={props.handleInfoSelect} handleUserSelect={props.handleUserSelect}/>)}
     </Card.Group>
   )
 

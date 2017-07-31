@@ -10,11 +10,8 @@ const AdDetails = (props) => {
       <h3>Location: {props.ad.location}</h3>
       <h3>Description: {props.ad.description}</h3>
       <h3>Seller: {props.ad.creator.first_name}</h3>
-
-
     </div>
   )
-
 }
 
 export default AdDetails

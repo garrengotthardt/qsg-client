@@ -12,6 +12,10 @@ import UsersContainer from './components/users/UsersContainer'
 import UserProfileContainer from './components/users/userProfile/UserProfileContainer'
 import Auth from './auth'
 import AuthAdapter from './authAdapter'
+import UserCard from './components/users/UserCard'
+import UserProfContainer from './components/users/UserProfContainer'
+
+
 // import AppContainer from './components/AppContainer'
 
 
@@ -26,8 +30,10 @@ class App extends Component {
         // isLoggedIn: false
       },
       ads: [],
+      users: [],
       currentAds: [],
-      selectedAd: {}
+      selectedAd: {},
+      selectedUser: {}
     }
   }
 
@@ -47,6 +53,10 @@ class App extends Component {
        })
      )
      }
+
+     fetch('http://localhost:3000/api/v1/users')
+     .then(data => data.json())
+     .then(users => this.setState({users}))
 
     fetch('http://localhost:3000/api/v1/ads')
     .then(data => data.json())
@@ -105,15 +115,18 @@ class App extends Component {
   }
 
   handleInfoSelect = (ad) => {
-    // return function (event) {
-      // event.preventDefault()
-
       this.setState({
         selectedAd: ad
       })
-
-    // }
   }
+
+  handleUserSelect = (user) => {
+      this.setState({
+        selectedUser: user
+      })
+  }
+
+
 
   render() {
 
@@ -126,7 +139,7 @@ class App extends Component {
 
           <Route path="/signup" component={SignUpForm} />
 
-          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect}/> } />
+          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} /> } />
 
 
           <Switch>
@@ -135,14 +148,14 @@ class App extends Component {
 
           <Route exact path="/ads/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
 
-          </Switch>
-
-
-
-
-          <Route exact path="/users" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer currentUser={this.state.auth.currentUser}/> }/>
+          <Route exact path="/users" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} users={this.state.users}/> }/>
 
           <Route path="/users/profile" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
+
+          <Route exact path="/users/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfContainer ads={this.state.ads} user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} handleInfoSelect={this.handleInfoSelect}/>} />
+
+          </Switch>
+
 
 
         </div>
