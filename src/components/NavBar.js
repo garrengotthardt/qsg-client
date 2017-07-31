@@ -18,12 +18,13 @@ export default class NavBar extends Component {
     return (
       <div>
         <Menu pointing secondary>
-          Hello {this.props.user.first_name}
+
           <Link to='/' ><Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} /></Link>
           <Link to='/ads' ><Menu.Item name='all listings' active={activeItem === 'all listings'} onClick={this.handleItemClick} /></Link>
           <Link to='/ads/new' ><Menu.Item name='create ad' active={activeItem === 'create ad'} onClick={this.handleItemClick} /></Link>
           <Link to='/users' ><Menu.Item name='all users' active={activeItem === 'all users'} onClick={this.handleItemClick} /></Link>
           <Link to='/users/profile' ><Menu.Item name='my profile' active={activeItem === 'my profile'} onClick={this.handleItemClick} /></Link>
+
 
           <Menu.Item name='saved listings' active={activeItem === 'friends'} onClick={this.handleItemClick} />
           <Menu.Menu position='right'>
