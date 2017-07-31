@@ -115,6 +115,12 @@ class App extends Component {
     // }
   }
 
+  setCurrentUser = (user) => {
+    debugger
+    this.setState({currentUser: user})
+    localStorage.setItem('email', user.email)
+  }
+
   render() {
 
     return (
@@ -124,7 +130,7 @@ class App extends Component {
 
           <Route path='/login' render={()=> this.isLoggedIn ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
 
-          <Route path="/signup" component={SignUpForm} />
+          <Route path="/signup" render={()=> <SignUpForm setCurrentUser={this.setCurrentUser}/>} />
 
           <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect}/> } />
 
