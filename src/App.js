@@ -23,13 +23,15 @@ class App extends Component {
     this.state = {
       auth: {
         currentUser: {},
-        isLoggedIn: false
+        // isLoggedIn: false
       },
       ads: [],
       currentAds: [],
       selectedAd: {}
     }
   }
+
+  isLoggedIn = () => window.localStorage.email
 
   componentDidMount(){
     if (localStorage.getItem('email')) {
@@ -40,8 +42,7 @@ class App extends Component {
        .then(users => users.filter(user => user.email === email))
        .then(currentUser => this.setState({
          auth: {
-           currentUser: currentUser[0],
-           isLoggedIn: true
+           currentUser: currentUser[0]
          }
        })
      )
@@ -121,27 +122,27 @@ class App extends Component {
         <div>
           <Route path='/' render={()=> <NavBar user={this.state.auth.currentUser} onLogout={this.handleLogout.bind(this)} /> } />
 
-          <Route path='/login' render={()=> this.state.auth.isLoggedIn ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
+          <Route path='/login' render={()=> this.isLoggedIn ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
 
           <Route path="/signup" component={SignUpForm} />
 
-          <Route exact path="/ads" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect}/> } />
+          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer currentAds={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect}/> } />
 
 
           <Switch>
 
           <Route path="/ads/new" render={()=> <AdForm currentUser={this.state.auth.currentUser}/> } />
 
-          <Route exact path="/ads/:id" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
+          <Route exact path="/ads/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
 
           </Switch>
 
 
 
 
-          <Route exact path="/users" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer currentUser={this.state.auth.currentUser}/> }/>
+          <Route exact path="/users" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer currentUser={this.state.auth.currentUser}/> }/>
 
-          <Route path="/users/profile" render={()=> !this.state.auth.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
+          <Route path="/users/profile" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
 
 
         </div>
