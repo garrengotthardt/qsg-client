@@ -4,7 +4,6 @@ import { Container, Image, Item, Button, Label } from 'semantic-ui-react'
 const AdDetails = (props) => {
 
   return(
-
     <Container>
       <Item.Group>
       <Item>

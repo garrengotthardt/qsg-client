@@ -34,7 +34,7 @@ class App extends Component {
       users: [],
       currentAds: [],
       savedAds: [],
-      selectedAd: {}
+      selectedAd: {},
       selectedUser: {}
     }
   }
@@ -170,7 +170,7 @@ class App extends Component {
           <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer ads={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} /> } />
 
 
-     
+
 
           <Switch>
 
