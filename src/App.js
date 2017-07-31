@@ -5,6 +5,7 @@ import './App.css';
 import SignUpForm from './components/users/SignUpForm'
 import LoginForm from './components/users/LoginForm'
 import NavBar from './components/NavBar'
+import HomeContainer from './components/HomeContainer'
 import AdContainer from './components/ads/AdContainer'
 import AdForm from './components/ads/AdForm'
 import AdDetailsContainer from './components/ads/AdDetailsContainer'
@@ -32,12 +33,13 @@ class App extends Component {
       ads: [],
       users: [],
       currentAds: [],
-      selectedAd: {},
+      savedAds: [],
+      selectedAd: {}
       selectedUser: {}
     }
   }
 
-  isLoggedIn = () => window.localStorage.email
+  isLoggedIn = () => !!window.localStorage.email
 
   componentDidMount(){
     if (localStorage.getItem('email')) {
@@ -45,11 +47,12 @@ class App extends Component {
        let email = localStorage.getItem('email')
        fetch('http://localhost:3000/api/v1/users')
        .then(data => data.json())
-       .then(users => users.filter(user => user.email === email))
+       .then(users => users.filter(user => user.email === email)[0])
        .then(currentUser => this.setState({
          auth: {
-           currentUser: currentUser[0]
-         }
+           currentUser: currentUser
+         },
+         savedAds: currentUser.saved_ads
        })
      )
      }
@@ -64,6 +67,7 @@ class App extends Component {
       ads,
       currentAds: ads
     }))
+
   }
 
   // handleLogin = (email) => {
@@ -79,13 +83,12 @@ class App extends Component {
       .then( res => {
         //check for an error message
         if( res.error ){
-          // console.log("do nothing")
+          console.log("do nothing")
         } else {
           // debugger
           localStorage.setItem('email', res.user.email)
           this.setState({
             auth:{
-              isLoggedIn: true,
               currentUser: res.user
             }
           })
@@ -95,12 +98,11 @@ class App extends Component {
       })
   }
 
-  handleLogout(){
+  handleLogout = () => {
       localStorage.clear()
       this.setState({
         auth: {
-          currentUser: {},
-          isLoggedIn:false
+          currentUser: {}
       }})
     }
 
@@ -112,6 +114,22 @@ class App extends Component {
     this.setState({
       currentAds: searchResults
     })
+  }
+
+  handleSaveAd = (event, adId) => {
+    console.log("saving")
+    console.log(event)
+    fetch('http://localhost:3000/api/v1/saver_ads', {
+      method: 'POST',
+      body: JSON.stringify({ "saver_id": `${this.state.auth.currentUser.id}`, "saved_ad_id": `${adId}` }),
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        // 'Authorization': localStorage.getItem('jwt')
+      }
+    })
+    .then(res => res.json())
+    .then(res => console.log(res))
   }
 
   handleInfoSelect = (ad) => {
@@ -127,26 +145,38 @@ class App extends Component {
   }
 
 
+  setCurrentUser = (user) => {
+    debugger
+    this.setState({currentUser: user})
+    localStorage.setItem('email', user.email)
+  }
+
 
   render() {
-
+    console.log("saved ads", this.state.savedAds)
     return (
       <Router>
         <div>
-          <Route path='/' render={()=> <NavBar user={this.state.auth.currentUser} onLogout={this.handleLogout.bind(this)} /> } />
+          <Route path='/' render={()=> <NavBar user={this.state.auth.currentUser} handleLogout={this.handleLogout} /> } />
 
-          <Route path='/login' render={()=> this.isLoggedIn ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
 
-          <Route path="/signup" component={SignUpForm} />
+          <Route path='/login' render={()=> this.isLoggedIn() ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
+
+          <Route path="/signup" render={()=> <SignUpForm setCurrentUser={this.setCurrentUser}/>} />
+
+
+          <Route exact path="/" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <HomeContainer /> } />
 
           <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer ads={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} /> } />
 
 
+     
+
           <Switch>
 
-          <Route path="/ads/new" render={()=> <AdForm currentUser={this.state.auth.currentUser}/> } />
+          <Route path="/ads/new" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<AdForm currentUser={this.state.auth.currentUser}/> } />
 
-          <Route exact path="/ads/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
+          <Route exact path="/ads/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
 
           <Route exact path="/users" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} users={this.state.users}/> }/>
 
@@ -155,6 +185,7 @@ class App extends Component {
           <Route exact path="/users/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfContainer user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} handleInfoSelect={this.handleInfoSelect}/>} />
 
           </Switch>
+
 
 
 
