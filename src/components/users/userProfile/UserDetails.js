@@ -4,7 +4,7 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 const UserDetails = (props) => {
   return(
     <Card centered='true'>
-      <Image src='http://s3.amazonaws.com/cdn.roosterteeth.com/default/original/user_profile_female.jpg' />
+      <Image src={props.currentUser.image_url} />
       <Card.Content>
         <Card.Header>
           {props.currentUser.first_name} {props.currentUser.last_name}
@@ -14,14 +14,6 @@ const UserDetails = (props) => {
             Email: {props.currentUser.email}
           </span>
         </Card.Meta>
-        <Card.Description>
-
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <a>
-
-        </a>
       </Card.Content>
     </Card>
   )

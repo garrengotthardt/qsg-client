@@ -28,9 +28,7 @@ const AdDetails = (props) => {
     <Button color="blue">Contact Seller</Button>
   </Container>
 
-
   )
-
 }
 
 export default AdDetails

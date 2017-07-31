@@ -1,11 +1,14 @@
 import React from 'react'
-import { Image, List } from 'semantic-ui-react'
-import UserListItem from './UserListItem'
+import { Image, List, Card, Container } from 'semantic-ui-react'
+import UserCard from './UserCard'
 
 const UserList = (props) => (
-  <List >
-    {props.users.map( user => <UserListItem user={user}/>)}
-  </List>
+  <Container>
+    <h1>All Users List</h1>
+    <Card.Group >
+      {props.users.map( user => <UserCard user={user} handleUserSelect={props.handleUserSelect}/>)}
+    </Card.Group>
+  </Container>
 )
 
 export default UserList

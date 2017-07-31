@@ -15,7 +15,9 @@ export default class AdContainer extends React.Component {
       <div>
         <Container>
           <Search handleSearch={this.props.handleSearch} />
-          <AdList currentAds={this.props.currentAds} handleInfoSelect={this.props.handleInfoSelect} handleSaveAd={this.props.handleSaveAd}/>
+
+          <AdList ads={this.props.ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect} />
+
         </Container>
       </div>
     )

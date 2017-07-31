@@ -6,8 +6,8 @@ const UserListItem = (props) => {
   return (
     <List.Item>
       <List.Content>
-        <List.Header><Link to={`/users/${props.user.id}`}>{props.user.first_name} {props.user.last_name}</Link></List.Header>
-        Top Contributor
+        <List.Header>{props.user.first_name} {props.user.last_name}</List.Header>
+
       </List.Content>
     </List.Item>
   )
