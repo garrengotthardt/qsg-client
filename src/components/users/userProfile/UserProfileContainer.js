@@ -20,7 +20,7 @@ const UserProfileContainer = (props) => {
       <Divider />
       <div className='segment'>
         <h2>These are your listings:</h2>
-        <UserCreatedAdsList createdAds={createdAds}/>
+        <UserCreatedAdsList createdAds={createdAds} handleInfoSelect={props.handleInfoSelect}/>
       </div>
       <div className='segment'>
         <Container textAlign='center'><Link className="LinkButton" to="/ads/new">Add a new listing</Link></Container>

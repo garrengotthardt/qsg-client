@@ -6,7 +6,7 @@ const UserCreatedAdsList = (props) => {
   return (
     <Card.Group>
       {props.createdAds.map( ad => (
-        <AdCard ad={ad}/>
+        <AdCard ad={ad} handleInfoSelect={props.handleInfoSelect}/>
       ))}
     </Card.Group>
   )
