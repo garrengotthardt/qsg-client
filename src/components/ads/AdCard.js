@@ -3,7 +3,8 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 const AdCard = (props) => {
-  console.log(props)
+  console.log("ad card props saved", props.savedAds)
+  console.log("ad card props ad", props.ad)
   return (
     <Card centered='true'>
     <Image src={props.ad.image_url} className='card-image' />
@@ -30,11 +31,17 @@ const AdCard = (props) => {
          <Icon name='comments' />
        </a>
 
-       
+       { props.savedAds ?
+         props.savedAds.map(savedAd => savedAd.id).includes(props.ad.id) ?
+         <a>
+           <Icon name='heart' onClick={() => props.handleUnsaveAd(props.ad.id)}/>
+         </a>
+       :
        <a>
          <Icon name='empty heart' onClick={() => props.handleSaveAd(props.ad.id)}/>
        </a>
-
+       : null
+     }
      </Card.Content>
     </Card>
   )

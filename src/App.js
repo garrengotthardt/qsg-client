@@ -28,12 +28,13 @@ class App extends Component {
     this.state = {
       auth: {
         currentUser: {},
-        // isLoggedIn: false
       },
       ads: [],
       users: [],
       currentAds: [],
       savedAds: [],
+      saverAds: [],
+      // savedAdIds: [],
       selectedAd: {},
       selectedUser: {}
     }
@@ -52,14 +53,20 @@ class App extends Component {
          auth: {
            currentUser: currentUser
          },
+        //  savedAdIds: currentUser.saved_ads.map(saved_ad => saved_ad.id),
          savedAds: currentUser.saved_ads
        })
      )
      }
 
-     fetch('http://localhost:3000/api/v1/users')
-     .then(data => data.json())
-     .then(users => this.setState({users}))
+   fetch('http://localhost:3000/api/v1/users')
+   .then(data => data.json())
+   .then(users => this.setState({users}))
+
+
+   fetch('http://localhost:3000/api/v1/saver_ads')
+   .then(data => data.json())
+   .then(saverAds => this.setState({saverAds}))
 
     fetch('http://localhost:3000/api/v1/ads')
     .then(data => data.json())
@@ -70,13 +77,6 @@ class App extends Component {
 
   }
 
-  // handleLogin = (email) => {
-  //   this.setState({
-  //     auth: {
-  //       email: email
-  //   })
-  //   // console.log("Email: ", this.state.email);
-  // }
 
   onLogin(loginParams){
     AuthAdapter.login(loginParams)
@@ -131,6 +131,23 @@ class App extends Component {
     .then(res => console.log(res))
   }
 
+  handleUnsaveAd = (adId) => {
+    console.log("unsaving")
+    let saverAd = this.state.saverAds.filter((saverAd) => saverAd.saver_id === this.state.auth.currentUser.id && saverAd.saved_ad_id === adId)[0]
+    let saverAdId = saverAd.id
+    fetch(`http://localhost:3000/api/v1/saver_ads/${saverAdId}`, {
+      method: 'DELETE',
+      body: {id: `${saverAdId}`},
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        // 'Authorization': localStorage.getItem('jwt')
+      }
+    })
+    .then(res => res.json())
+    .then(res => console.log(res))
+  }
+
   handleInfoSelect = (ad) => {
       this.setState({
         selectedAd: ad
@@ -152,7 +169,7 @@ class App extends Component {
 
 
   render() {
-    console.log("saved ads", this.state.savedAds)
+    console.log("saver ads", this.state.saverAds)
     return (
       <Router>
         <div>
@@ -166,7 +183,7 @@ class App extends Component {
 
           <Route exact path="/" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <HomeContainer /> } />
 
-          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer ads={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} handleSaveAd={this.handleSaveAd} /> } />
+          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer ads={this.state.currentAds} savedAds={this.state.savedAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} handleSaveAd={this.handleSaveAd} handleUnsaveAd={this.handleUnsaveAd}/> } />
 
 
 
@@ -177,11 +194,11 @@ class App extends Component {
 
           <Route exact path="/ads/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
 
-          <Route exact path="/users" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} users={this.state.users}/> }/>
+          <Route exact path="/users" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <UsersContainer handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} users={this.state.users} /> }/>
 
-          <Route path="/users/profile" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
+          <Route path="/users/profile" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
 
-          <Route exact path="/users/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfContainer user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} handleInfoSelect={this.handleInfoSelect}/>} />
+          <Route exact path="/users/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <UserProfContainer user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} currentUser={this.state.auth.currentUser} handleInfoSelect={this.handleInfoSelect}/>} savedAds={this.state.savedAds} />
 
           </Switch>
 
