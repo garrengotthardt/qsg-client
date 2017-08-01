@@ -16,12 +16,7 @@ import AuthAdapter from './authAdapter'
 import UserCard from './components/users/UserCard'
 import UserProfContainer from './components/users/UserProfContainer'
 
-
-// import AppContainer from './components/AppContainer'
-
-
 class App extends Component {
-
   constructor() {
     super()
 
@@ -35,7 +30,9 @@ class App extends Component {
       currentAds: [],
       savedAds: [],
       selectedAd: {},
-      selectedUser: {}
+      selectedUser: {},
+      categories: [],
+      newAd: {}
     }
   }
 
@@ -61,13 +58,16 @@ class App extends Component {
      .then(data => data.json())
      .then(users => this.setState({users}))
 
-    fetch('http://localhost:3000/api/v1/ads')
-    .then(data => data.json())
-    .then(ads => this.setState({
-      ads,
-      currentAds: ads
-    }))
+      fetch('http://localhost:3000/api/v1/ads')
+      .then(data => data.json())
+      .then(ads => this.setState({
+        ads,
+        currentAds: ads
+      }))
 
+      fetch('http://localhost:3000/api/v1/categories')
+      .then(data => data.json())
+      .then(categories => this.setState({ categories }))
   }
 
   // handleLogin = (email) => {
@@ -106,10 +106,9 @@ class App extends Component {
       }})
     }
 
-
   handleSearch = (searchTerm) => {
     let searchResults = this.state.ads.filter( ad => {
-      return ad.title.toLowerCase().includes(searchTerm.toLowerCase()) || ad.description.toLowerCase().includes(searchTerm.toLowerCase())
+      return ad.title.toLowerCase().includes(searchTerm.toLowerCase()) || ad.description.toLowerCase().includes(searchTerm.toLowerCase()) || ad.categories[0].name.toLowerCase().includes(searchTerm.toLowerCase())
     })
     this.setState({
       currentAds: searchResults
@@ -125,7 +124,6 @@ class App extends Component {
       headers: {
         'content-type': 'application/json',
         'accept': 'application/json',
-        // 'Authorization': localStorage.getItem('jwt')
       }
     })
     .then(res => res.json())
@@ -144,13 +142,19 @@ class App extends Component {
       })
   }
 
-
   setCurrentUser = (user) => {
-    debugger
     this.setState({currentUser: user})
     localStorage.setItem('email', user.email)
   }
 
+  handlePost = () => {
+    fetch('http://localhost:3000/api/v1/ads')
+    .then(data => data.json())
+    .then(ads => this.setState({
+      ads,
+      currentAds: ads
+    }))
+  }
 
   render() {
     console.log("saved ads", this.state.savedAds)
@@ -159,36 +163,27 @@ class App extends Component {
         <div>
           <Route path='/' render={()=> <NavBar user={this.state.auth.currentUser} handleLogout={this.handleLogout} /> } />
 
-
           <Route path='/login' render={()=> this.isLoggedIn() ? <Redirect to="/"/> : <LoginForm onLogin={this.onLogin.bind(this)}/> } />
 
           <Route path="/signup" render={()=> <SignUpForm setCurrentUser={this.setCurrentUser}/>} />
-
 
           <Route exact path="/" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <HomeContainer /> } />
 
           <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer ads={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} /> } />
 
-
-
-
           <Switch>
 
-          <Route path="/ads/new" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<AdForm currentUser={this.state.auth.currentUser}/> } />
+            <Route path="/ads/new" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> :<AdForm currentUser={this.state.auth.currentUser} categories={this.state.categories} handlePost={this.handlePost}/> } />
 
-          <Route exact path="/ads/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
+            <Route exact path="/ads/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <AdDetailsContainer selectedAd={this.state.selectedAd} /> } />
 
-          <Route exact path="/users" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} users={this.state.users}/> }/>
+            <Route exact path="/users" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UsersContainer handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} users={this.state.users}/> }/>
 
-          <Route path="/users/profile" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
+            <Route path="/users/profile" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
 
-          <Route exact path="/users/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfContainer user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} handleInfoSelect={this.handleInfoSelect}/>} />
+            <Route exact path="/users/:id" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <UserProfContainer user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} handleInfoSelect={this.handleInfoSelect}/>} />
 
           </Switch>
-
-
-
-
         </div>
       </Router>
     );

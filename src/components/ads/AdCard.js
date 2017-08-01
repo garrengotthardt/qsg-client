@@ -18,6 +18,7 @@ const AdCard = (props) => {
            </Link>
          </span>
        </Card.Meta>
+
        <Card.Description>
         {props.ad.description}
        </Card.Description>
@@ -40,3 +41,4 @@ const AdCard = (props) => {
 
 export default AdCard
 // <Icon name='user circle' /> {props.ad.creator.first_name} {props.ad.creator.last_name}
+//  Catgeory: {props.ad.categories[0].name}

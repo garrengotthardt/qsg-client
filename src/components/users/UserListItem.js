@@ -7,7 +7,6 @@ const UserListItem = (props) => {
     <List.Item>
       <List.Content>
         <List.Header>{props.user.first_name} {props.user.last_name}</List.Header>
-
       </List.Content>
     </List.Item>
   )

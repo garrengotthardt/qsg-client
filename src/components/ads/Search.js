@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Button, Form } from 'semantic-ui-react'
+import { Input, Button, Form, Header } from 'semantic-ui-react'
 
 class Search extends React.Component {
 
@@ -25,12 +25,19 @@ class Search extends React.Component {
       <Form>
         <br></br>
         <br></br>
-        <Form.Field>
-          <input placeholder='' onChange={this.handleChange} type="text"/>
-        </Form.Field>
-          <Button type="submit" onClick={() => this.props.handleSearch(this.state.searchTerm)}>Search</Button>
+        <Form.Group>
+          <Form.Input icon='search' placeholder='Search...' onChange={this.handleChange} type="text" width={14}/>
+          <Form.Button size='large' type="submit" onClick={() => this.props.handleSearch(this.state.searchTerm)}>Search</Form.Button>
+        </Form.Group>
+        <Header textAlign='center'>
           <br></br>
-          <br></br>
+            <Button size='huge' color='red' type="submit" onClick={() => this.props.handleSearch('')}>All</Button>
+            <Button size='huge' color='teal' type="submit" onClick={() => this.props.handleSearch('Furniture')}>Furniture</Button>
+            <Button size='huge' color='pink'type="submit" onClick={() => this.props.handleSearch('Pets')}>Pets</Button>
+            <Button size='huge' color='blue'type="submit" onClick={() => this.props.handleSearch('Cars')}>Cars</Button>
+            <Button size='huge' color='green'type="submit" onClick={() => this.props.handleSearch('Apartments')}>Apartments</Button>
+        </Header>
+          <br></br><br></br><br></br>
       </Form>
     )
   }
