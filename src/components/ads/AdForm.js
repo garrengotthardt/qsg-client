@@ -14,7 +14,7 @@ class AdForm extends Component {
     super(props)
 
     this.state = {
-      creator_id: this.props.currentUser.id,
+      creator_id: `${this.props.currentUser.id}`,
       title: '',
       image_url: '',
       description: '',
@@ -36,7 +36,7 @@ class AdForm extends Component {
         'accept': 'application/json',
       }
     }).then(() => this.props.handlePost())
-    
+
     this.setState({ redirect: true })
   }
 

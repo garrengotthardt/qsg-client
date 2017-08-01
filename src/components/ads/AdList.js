@@ -5,11 +5,11 @@ import AdCard from './AdCard'
 
 const AdList = (props) => {
 
-console.log(props)
+console.log("ad list props",props)
   return (
 
     <Card.Group centered='true'>
-      {props.ads.map( ad => <AdCard ad={ad} handleInfoSelect={props.handleInfoSelect} handleUserSelect={props.handleUserSelect}/>)}
+      {props.ads.map( ad => <AdCard ad={ad} handleInfoSelect={props.handleInfoSelect} handleUserSelect={props.handleUserSelect} handleSaveAd={props.handleSaveAd} handleUnsaveAd={props.handleUnsaveAd} savedAds={props.savedAds}/>)}
 
     </Card.Group>
   )

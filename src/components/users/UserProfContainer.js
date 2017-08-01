@@ -22,22 +22,30 @@ export default class UserProfContainer extends React.Component {
 
 
   render () {
+    console.log("user profile props", this.props)
     return(
       <Container textAlign='center'>
+
       <div>
         <h1>{this.state.user.first_name} {this.state.user.last_name}</h1>
         <div className='segment'>
-          <UserCard user={this.state.user} handleUserSelect={this.props.handleUserSelect}/>
+          <UserCard user={this.state.user} handleUserSelect={this.props.handleUserSelect} />
         </div>
         <Divider />
         <div className='segment'>
           <h2>These are {this.state.user.first_name}'s Listings:</h2>
-          {this.state.user.ads ? <AdList ads={this.state.user.ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect}/> : null}
+          {this.state.user.ads ? <AdList ads={this.state.user.ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect} handleSaveAd={this.props.handleSaveAd} handleUnsaveAd={this.props.handleUnsaveAd}  /> : null}
         </div>
+
+        { this.state.user.id === this.props.currentUser.id ?
         <div className='segment'>
-          <h2>These are {this.state.user.first_name}'s Saved Listings:</h2>
-          {this.state.user.saved_ads ? <AdList ads={this.state.user.saved_ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect}/> : null}
-        </div></div>
+          <h2>Your Saved Listings:</h2>
+          {this.state.user.saved_ads ? <AdList savedAds={this.props.savedAds} ads={this.state.user.saved_ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect} handleSaveAd={this.props.handleSaveAd} handleUnsaveAd={this.props.handleUnsaveAd} /> : null}
+        </div>
+        :null
+      }
+      </div>
+
       </Container>
     )
   }

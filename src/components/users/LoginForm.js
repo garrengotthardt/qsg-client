@@ -25,9 +25,9 @@ class LoginForm extends Component {
         <Form size='large' id='login-form' onSubmit={() => this.props.onLogin(this.state)}>
           <Form.Field onChange={this.handleChange} label='Email' control='input' placeholder='Email address' />
           {/* <Form.Input label='Enter Password' type='password' /> */}
-          <Button  type='submit'>Submit</Button>
-          Or
-          <Link to="/signup">Sign Up</Link>
+          <Button  type='submit' color='blue'>Login</Button>
+          or
+          <Link to="/signup"> Sign Up</Link>
           <Divider hidden />
         </Form>
       </Container>
