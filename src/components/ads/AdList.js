@@ -9,7 +9,7 @@ console.log(props)
   return (
 
     <Card.Group centered='true'>
-      {props.ads.map( ad => <AdCard ad={ad} handleInfoSelect={props.handleInfoSelect} handleUserSelect={props.handleUserSelect}/>)}
+      {props.ads.map( ad => <AdCard ad={ad} handleInfoSelect={props.handleInfoSelect} handleUserSelect={props.handleUserSelect} handleSaveAd={props.handleSaveAd}/>)}
 
     </Card.Group>
   )

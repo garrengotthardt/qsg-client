@@ -116,9 +116,8 @@ class App extends Component {
     })
   }
 
-  handleSaveAd = (event, adId) => {
+  handleSaveAd = (adId) => {
     console.log("saving")
-    console.log(event)
     fetch('http://localhost:3000/api/v1/saver_ads', {
       method: 'POST',
       body: JSON.stringify({ "saver_id": `${this.state.auth.currentUser.id}`, "saved_ad_id": `${adId}` }),
@@ -167,7 +166,7 @@ class App extends Component {
 
           <Route exact path="/" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <HomeContainer /> } />
 
-          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer ads={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} /> } />
+          <Route exact path="/ads" render={()=> !this.isLoggedIn ? <Redirect to="/login"/> : <AdContainer ads={this.state.currentAds} handleSearch={this.handleSearch} handleInfoSelect={this.handleInfoSelect} handleUserSelect={this.handleUserSelect} handleSaveAd={this.handleSaveAd} /> } />
 
 
 

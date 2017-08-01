@@ -29,9 +29,12 @@ const AdCard = (props) => {
        <a>
          <Icon name='comments' />
        </a>
+
+       
        <a>
          <Icon name='empty heart' onClick={() => props.handleSaveAd(props.ad.id)}/>
        </a>
+
      </Card.Content>
     </Card>
   )
