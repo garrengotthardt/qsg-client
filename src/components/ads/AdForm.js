@@ -36,6 +36,7 @@ class AdForm extends Component {
         'accept': 'application/json',
       }
     }).then(() => this.props.handlePost())
+    
     this.setState({ redirect: true })
   }
 
