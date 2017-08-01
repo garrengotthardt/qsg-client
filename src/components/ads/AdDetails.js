@@ -19,6 +19,7 @@ const AdDetails = (props) => {
             <Label as='a'>${props.ad.price}</Label>
           </Label.Group>
           <Item.Extra>Location: {props.ad.location}</Item.Extra>
+          <Item.Extra>Category: {props.ad.categories[0].name}</Item.Extra>
           <Item.Extra>Seller: {props.ad.creator.first_name}</Item.Extra>
         </Item.Content>
       </Item>
