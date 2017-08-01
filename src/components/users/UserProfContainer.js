@@ -34,13 +34,13 @@ export default class UserProfContainer extends React.Component {
         <Divider />
         <div className='segment'>
           <h2>These are {this.state.user.first_name}'s Listings:</h2>
-          {this.state.user.ads ? <AdList ads={this.state.user.ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect}/> : null}
+          {this.state.user.ads ? <AdList ads={this.state.user.ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect} handleSaveAd={this.props.handleSaveAd} handleUnsaveAd={this.props.handleUnsaveAd}  /> : null}
         </div>
 
         { this.state.user.id === this.props.currentUser.id ?
         <div className='segment'>
           <h2>Your Saved Listings:</h2>
-          {this.state.user.saved_ads ? <AdList savedAds={this.state.user.saved_ads} ads={this.state.user.saved_ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect}/> : null}
+          {this.state.user.saved_ads ? <AdList savedAds={this.props.savedAds} ads={this.state.user.saved_ads} handleInfoSelect={this.props.handleInfoSelect} handleUserSelect={this.props.handleUserSelect} handleSaveAd={this.props.handleSaveAd} handleUnsaveAd={this.props.handleUnsaveAd} /> : null}
         </div>
         :null
       }

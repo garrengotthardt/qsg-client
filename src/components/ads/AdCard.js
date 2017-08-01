@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import AdCardActions from './AdCardActions'
 
 const AdCard = (props) => {
   console.log("ad card props saved", props.savedAds)
@@ -24,7 +25,8 @@ const AdCard = (props) => {
        </Card.Description>
      </Card.Content>
      <Card.Content extra>
-       <a>
+       <AdCardActions handleInfoSelect={props.handleInfoSelect} handleSaveAd={props.handleSaveAd} handleUnsaveAd={props.handleUnsaveAd} ad={props.ad} savedAds={props.savedAds} />
+       {/* <a>
          <Link to={`/ads/${props.ad.id}`} ><Icon onClick={() => props.handleInfoSelect(props.ad)} name='info circle' /></Link>
        </a>
        <a>
@@ -41,7 +43,7 @@ const AdCard = (props) => {
          <Icon name='empty heart' onClick={() => props.handleSaveAd(props.ad.id)}/>
        </a>
        : null
-     }
+     } */}
      </Card.Content>
     </Card>
   )

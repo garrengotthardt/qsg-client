@@ -30,11 +30,10 @@ class App extends Component {
         currentUser: {},
       },
       ads: [],
+      savedAds: [],
       users: [],
       currentAds: [],
-      savedAds: [],
       saverAds: [],
-      // savedAdIds: [],
       selectedAd: {},
       selectedUser: {}
     }
@@ -129,6 +128,7 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(res => console.log(res))
+    .then(() => this.reFetchSaverAds())
   }
 
   handleUnsaveAd = (adId) => {
@@ -145,7 +145,13 @@ class App extends Component {
       }
     })
     .then(res => res.json())
-    .then(res => console.log(res))
+    .then(() => this.reFetchSaverAds())
+  }
+
+  reFetchSaverAds = () => {
+    fetch('http://localhost:3000/api/v1/saver_ads')
+    .then(data => data.json())
+    .then(saverAds => this.setState({saverAds}))
   }
 
   handleInfoSelect = (ad) => {
@@ -162,7 +168,6 @@ class App extends Component {
 
 
   setCurrentUser = (user) => {
-    debugger
     this.setState({currentUser: user})
     localStorage.setItem('email', user.email)
   }
@@ -198,7 +203,7 @@ class App extends Component {
 
           <Route path="/users/profile" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <UserProfileContainer currentUser={this.state.auth.currentUser} ads={this.state.ads} handleInfoSelect={this.handleInfoSelect}/>}/>
 
-          <Route exact path="/users/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <UserProfContainer user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} currentUser={this.state.auth.currentUser} handleInfoSelect={this.handleInfoSelect}/>} savedAds={this.state.savedAds} />
+          <Route exact path="/users/:id" render={()=> !this.isLoggedIn() ? <Redirect to="/login"/> : <UserProfContainer user={this.state.selectedUser} handleUserSelect={this.handleUserSelect} currentUser={this.state.auth.currentUser} handleInfoSelect={this.handleInfoSelect} savedAds={this.state.savedAds} handleSaveAd={this.handleSaveAd} handleUnsaveAd={this.handleUnsaveAd}/> } />
 
           </Switch>
 
